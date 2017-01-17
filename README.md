@@ -73,7 +73,6 @@ export default {
             if (process.env.NODE_ENV !== 'production') {
                 if (module.hot) {
                     module.hot.accept('./reducer', () => {
-                        injectSaga('item', require('./sagas').default);
                         injectReducer('item', require('./reducer').default);
                     });
                 }
