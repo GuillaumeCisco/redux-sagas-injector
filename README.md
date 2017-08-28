@@ -2,6 +2,7 @@
 Helper for loading sagas asynchronously using redux with redux-injector
 
 Adding a new saga is then done with injectSaga at any time.
+You can also make them hot replacement module compatible thanks to the reloadSaga helper. :tada:
 
 ## Installation
 Install ```redux-sagas-injector``` via npm.
@@ -22,11 +23,11 @@ import {createInjectSagasStore} from './redux-sagas-injector';
 
 ## Use `createInjectSagasStore` instead of `createStore` or `createInjectStore`
 
-You also need to use the `sagaMiddleware` from the lib. It is basically a `createSagaMiddleware()` from 'redux-saga'
+You also need to use the `sagaMiddleware` from the lib. It is basically a `createSagaMiddleware()` from 'redux-saga'.
 
- ```javascript
- // using an ES6 transpiler, like babel
-import {createInjectSagasStore, sagaMiddleware} from './redux-sagas-injector';
+```javascript
+import {createInjectSagasStore, sagaMiddleware, reloadSaga} from './redux-sagas-injector';
+import rootSaga from './sagas';
  
 const enhancers = [
         applyMiddleware(
@@ -34,11 +35,16 @@ const enhancers = [
             routerMiddleware(hashHistory),
         ),];
 
-const store = createInjectSagasStore(rootReducer, rootSaga, initialState, compose(...enhancers));
+const store = createInjectSagasStore({'rootSaga': rootSaga}, rootReducer, initialState, compose(...enhancers));
 
- // not using an ES6 transpiler
- var createInjectStore = require('redux-injector').createInjectStore;
- ```
+// Hot reload sagas (requires Webpack or Browserify HMR to be enabled)
+if (module.hot) {
+    module.hot.accept('./sagas', () => {
+        reloadSaga('rootSaga', require('./sagas').default);
+    });
+}
+
+```
  
  ## Injecting a new saga.
  For any store created using redux-sagas-injector, simply use ```injectSaga``` to add a new saga.
@@ -60,7 +66,7 @@ You should use injectSaga in complement with injectReducer for loading your js c
 
  ```javascript
 import {injectReducer} from 'redux-injector';
-import {injectSaga} from 'redux-sagas-injector';
+import {reloadSaga} from 'redux-sagas-injector';
 
 export default {
     path: 'item(/:id)',
@@ -73,7 +79,11 @@ export default {
             if (process.env.NODE_ENV !== 'production') {
                 if (module.hot) {
                     module.hot.accept('./reducer', () => {
-                        injectReducer('item', require('./reducer').default);
+                        injectReducer('item', require('./reducer').default, true);
+                    });
+                    
+                    module.hot.accept('./sagas', () => {
+                        reloadSaga('item', require('./sagas').default);
                     });
                 }
             }
