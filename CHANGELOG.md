@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### 0.2.2
+
+Use dependency redux-reducers-injector
 
 #### 0.2.1
 
