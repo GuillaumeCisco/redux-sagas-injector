@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "redux": "^3.x",
-    "redux-injector": "^0.1.0",
+    "redux-reducers-injector": "^0.1.0",
     "redux-saga": "^0.15.6"
   }
 }

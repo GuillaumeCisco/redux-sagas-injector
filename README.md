@@ -65,7 +65,7 @@ You should use injectSaga in complement with injectReducer for loading your js c
 ## Example:
 
  ```javascript
-import {injectReducer} from 'redux-injector';
+import {injectReducer} from 'redux-reducers-injector';
 import {reloadSaga} from 'redux-sagas-injector';
 
 export default {
@@ -79,7 +79,7 @@ export default {
             if (process.env.NODE_ENV !== 'production') {
                 if (module.hot) {
                     module.hot.accept('./reducer', () => {
-                        injectReducer('item', require('./reducer').default, true);
+                        reloadReducer('item', require('./reducer').default);
                     });
                     
                     module.hot.accept('./sagas', () => {
