@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.2.3
+
+Add `"plugins": ["transform-runtime"]` in .babelrc for generating correct code importing regenerator.
+
 ### 0.2.2
 
 Use dependency redux-reducers-injector
