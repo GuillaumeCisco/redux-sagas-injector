@@ -1,3 +1,6 @@
+# redux-sagas-injector-forked
+Forked package which used reducers forked package.
+
 # redux-sagas-injector
 Helper for loading sagas asynchronously using redux with redux-injector
 

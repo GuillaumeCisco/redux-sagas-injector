@@ -2,7 +2,7 @@
  * Created by guillaume on 1/17/17.
  */
 
-import {createInjectStore} from 'redux-reducers-injector';
+import {createInjectStore} from 'redux-reducers-injector-forked';
 import createSagaMiddleware from 'redux-saga';
 import {take, fork, cancel} from 'redux-saga/effects';
 

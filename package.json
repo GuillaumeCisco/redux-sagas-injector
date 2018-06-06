@@ -1,6 +1,6 @@
 {
-  "name": "redux-sagas-injector",
-  "version": "0.2.3",
+  "name": "redux-sagas-injector-forked",
+  "version": "0.0.1",
   "description": "Allows dynamically injecting sagas into a redux store at runtime.",
   "main": "lib/redux-sagas-injector.js",
   "scripts": {
@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "redux": "^3.x",
-    "redux-reducers-injector": "^0.1.0",
+    "redux-reducers-injector-forked": "^0.0.2",
     "redux-saga": "^0.15.6"
   }
 }
