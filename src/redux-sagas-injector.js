@@ -66,6 +66,12 @@ export function createInjectSagasStore(rootSaga, initialReducers, ...args) {
     return store;
 }
 
-export const sagaMiddleware = createSagaMiddleware();
+let sagaMiddleware;
+
+export function createInjectSagasMiddleware(options) {
+    sagaMiddleware = createSagaMiddleware(options);
+    return sagaMiddleware;
+}
+
 
 export default createInjectSagasStore;
