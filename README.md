@@ -64,33 +64,49 @@ You should use injectSaga in complement with injectReducer for loading your js c
 
 ## Example:
 
+
+ Using the excellent [react-universal-component](https://github.com/faceyspacey/react-universal-component) library, you just have to write:
+ 
  ```javascript
-import {injectReducer} from 'redux-reducers-injector';
-import {reloadSaga} from 'redux-sagas-injector';
-
-export default {
-    path: 'item(/:id)',
-    getComponent(nextState, cb) {
-        require.ensure([], (require) => {
-            injectSaga('item', require('./sagas').default);
-            injectReducer('item', require('./reducer').default);
-
-            // Configure hot module replacement for the reducer
-            if (process.env.NODE_ENV !== 'production') {
-                if (module.hot) {
-                    module.hot.accept('./reducer', () => {
-                        reloadReducer('item', require('./reducer').default);
-                    });
-                    
-                    module.hot.accept('./sagas', () => {
-                        reloadSaga('item', require('./sagas').default);
-                    });
-                }
-            }
-
-            cb(null, require('./components/layout').default);
-        });
-    },
-};
-
+ import universal from 'react-universal-component';
+ import {injectSaga} from 'redux-sagas-injector';
+ 
+ const MyComponent = universal(import(`./my_component`), {
+         onLoad: (module, info, props, context) => {
+             injectSaga('my-saga-key', module.saga, false, context.store);
+         },
+     });
  ```
+ 
+`react-router`
+ 
+  ```javascript
+ import {injectReducer, reloadReducer} from 'redux-reducers-injector';
+ import {injectSaga, reloadSaga} from 'redux-sagas-injector';
+ 
+ export default {
+     path: 'item(/:id)',
+     getComponent(nextState, cb) {
+         require.ensure([], (require) => {
+             injectSaga('item', require('./sagas').default);
+             injectReducer('item', require('./reducer').default);
+ 
+             // Configure hot module replacement for the reducer
+             if (process.env.NODE_ENV !== 'production') {
+                 if (module.hot) {
+                     module.hot.accept('./reducer', () => {
+                         reloadReducer('item', require('./reducer').default);
+                     });
+                     
+                     module.hot.accept('./sagas', () => {
+                         reloadSaga('item', require('./sagas').default);
+                     });
+                 }
+             }
+ 
+             cb(null, require('./components/layout').default);
+         });
+     },
+ };
+ 
+  ```

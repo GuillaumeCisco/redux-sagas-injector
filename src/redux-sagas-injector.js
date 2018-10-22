@@ -30,7 +30,7 @@ export const SagaManager = {
         sagaMiddleware.run(createAbortableSaga(key, saga));
     },
 
-    cancelSaga(key) {
+    cancelSaga(key, store) {
         store.dispatch({
             type: CANCEL_SAGAS_HMR,
             payload: key,
@@ -43,7 +43,7 @@ export function reloadSaga(key, saga) {
     SagaManager.startSaga(key, saga);
 }
 
-export function injectSaga(key, saga, force = false) {
+export function injectSaga(key, saga, force=false, store=store) {
     // If already set, do nothing, except force is specified
     const exists = store.injectedSagas.includes(key);
     if (!exists || force) {
@@ -51,7 +51,7 @@ export function injectSaga(key, saga, force = false) {
             store.injectedSagas = [...store.injectedSagas, key];
         }
         if (force) {
-            SagaManager.cancelSaga(key);
+            SagaManager.cancelSaga(key, store);
         }
         SagaManager.startSaga(key, saga);   
     }

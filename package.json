@@ -1,7 +1,7 @@
 {
   "name": "redux-sagas-injector",
-  "version": "0.2.5",
-  "description": "Allows dynamically injecting sagas into a redux store at runtime.",
+  "version": "0.2.6",
+  "description": "Allows dynamically injecting sagas into a redux store at runtime. Support HMR and SSR.",
   "main": "lib/redux-sagas-injector.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -17,7 +17,7 @@
     "react",
     "redux-sagas"
   ],
-  "author": "Guillaume Cisco <guillaume@rythm.co>",
+  "author": "Guillaume Cisco <guillaumecisco@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/GuillaumeCisco/redux-sagas-injector/issues"
@@ -31,11 +31,11 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1",
-    "eslint": "^5.6.1"
+    "eslint": "^5.7.0"
   },
   "dependencies": {
-    "redux": "^4.0.0",
-    "redux-reducers-injector": "^0.1.3",
-    "redux-saga": "^0.16.0"
+    "redux": "4.0.1",
+    "redux-reducers-injector": "0.2.2",
+    "redux-saga": "^0.16.2"
   }
 }

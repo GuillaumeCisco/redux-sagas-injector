@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 0.2.4
+
+Update dependencies
+Allow using context store
+
 ### 0.2.3
 
 Add `"plugins": ["transform-runtime"]` in .babelrc for generating correct code importing regenerator.
