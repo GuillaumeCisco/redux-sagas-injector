@@ -1,9 +1,17 @@
 # CHANGELOG
 
-### 0.2.4
+### 0.2.7
+
+Fix using context store
+
+### 0.2.6
 
 Update dependencies
 Allow using context store
+
+### 0.2.5
+
+Fix README
 
 ### 0.2.3
 

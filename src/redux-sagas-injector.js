@@ -10,14 +10,14 @@ export const CANCEL_SAGAS_HMR = 'CANCEL_SAGAS_HMR';
 
 let store = {};
 
-function createAbortableSaga(key, saga) {
+function createAbortableSaga(key, saga, store=store) {
     if (process.env.NODE_ENV === 'development') {
         return function* main() {
             const sagaTask = yield fork(saga);
             const {payload} = yield take(CANCEL_SAGAS_HMR);
            
             if (payload === key) {
-                yield cancel(sagaTask);
+                yield cancel(sagaTask, store);
             }
         };
     } else {
@@ -26,11 +26,11 @@ function createAbortableSaga(key, saga) {
 }
 
 export const SagaManager = {
-    startSaga(key, saga) {
-        sagaMiddleware.run(createAbortableSaga(key, saga));
+    startSaga(key, saga, store=store) {
+        sagaMiddleware.run(createAbortableSaga(key, saga, store));
     },
 
-    cancelSaga(key, store) {
+    cancelSaga(key, store=store) {
         store.dispatch({
             type: CANCEL_SAGAS_HMR,
             payload: key,
@@ -38,9 +38,9 @@ export const SagaManager = {
     },
 };
 
-export function reloadSaga(key, saga) {
-    SagaManager.cancelSaga(key);
-    SagaManager.startSaga(key, saga);
+export function reloadSaga(key, saga, store=store) {
+    SagaManager.cancelSaga(key, store);
+    SagaManager.startSaga(key, saga, store);
 }
 
 export function injectSaga(key, saga, force=false, store=store) {
@@ -53,7 +53,7 @@ export function injectSaga(key, saga, force=false, store=store) {
         if (force) {
             SagaManager.cancelSaga(key, store);
         }
-        SagaManager.startSaga(key, saga);   
+        SagaManager.startSaga(key, saga, store);
     }
 }
 
@@ -61,7 +61,7 @@ export function createInjectSagasStore(rootSaga, initialReducers, ...args) {
     store = createInjectStore(initialReducers, ...args);
     store.injectedSagas = [];
 
-    injectSaga(Object.keys(rootSaga)[0], rootSaga[Object.keys(rootSaga)[0]]);
+    injectSaga(Object.keys(rootSaga)[0], rootSaga[Object.keys(rootSaga)[0]], false, store);
 
     return store;
 }
