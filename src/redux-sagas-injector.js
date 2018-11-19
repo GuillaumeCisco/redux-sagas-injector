@@ -8,14 +8,14 @@ import {take, fork, cancel} from 'redux-saga/effects';
 
 export const CANCEL_SAGAS_HMR = 'CANCEL_SAGAS_HMR';
 
-let store = {};
+let original_store = {};
 
-function createAbortableSaga(key, saga, store=store) {
+function createAbortableSaga(key, saga, store = original_store) {
     if (process.env.NODE_ENV === 'development') {
         return function* main() {
             const sagaTask = yield fork(saga);
             const {payload} = yield take(CANCEL_SAGAS_HMR);
-           
+
             if (payload === key) {
                 yield cancel(sagaTask, store);
             }
@@ -26,11 +26,11 @@ function createAbortableSaga(key, saga, store=store) {
 }
 
 export const SagaManager = {
-    startSaga(key, saga, store=store) {
+    startSaga(key, saga, store = original_store) {
         sagaMiddleware.run(createAbortableSaga(key, saga, store));
     },
 
-    cancelSaga(key, store=store) {
+    cancelSaga(key, store = original_store) {
         store.dispatch({
             type: CANCEL_SAGAS_HMR,
             payload: key,
@@ -38,12 +38,12 @@ export const SagaManager = {
     },
 };
 
-export function reloadSaga(key, saga, store=store) {
+export function reloadSaga(key, saga, store = original_store) {
     SagaManager.cancelSaga(key, store);
     SagaManager.startSaga(key, saga, store);
 }
 
-export function injectSaga(key, saga, force=false, store=store) {
+export function injectSaga(key, saga, force = false, store = original_store) {
     // If already set, do nothing, except force is specified
     const exists = store.injectedSagas.includes(key);
     if (!exists || force) {
@@ -58,12 +58,12 @@ export function injectSaga(key, saga, force=false, store=store) {
 }
 
 export function createInjectSagasStore(rootSaga, initialReducers, ...args) {
-    store = createInjectStore(initialReducers, ...args);
-    store.injectedSagas = [];
+    original_store = createInjectStore(initialReducers, ...args);
+    original_store.injectedSagas = [];
 
-    injectSaga(Object.keys(rootSaga)[0], rootSaga[Object.keys(rootSaga)[0]], false, store);
+    injectSaga(Object.keys(rootSaga)[0], rootSaga[Object.keys(rootSaga)[0]], false, original_store);
 
-    return store;
+    return original_store;
 }
 
 export const sagaMiddleware = createSagaMiddleware();

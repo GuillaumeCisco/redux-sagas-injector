@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### 0.2.8
+- Fix hoisting with babel transformation of default argument
+
 ### 0.2.7
 
 Fix using context store
