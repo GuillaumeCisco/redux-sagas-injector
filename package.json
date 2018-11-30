@@ -1,6 +1,6 @@
 {
   "name": "redux-sagas-injector",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Allows dynamically injecting sagas into a redux store at runtime. Support HMR and SSR.",
   "main": "lib/redux-sagas-injector.js",
   "scripts": {
@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "redux": "4.0.1",
-    "redux-reducers-injector": "0.2.2",
+    "redux-reducers-injector": "0.2.3",
     "redux-saga": "^0.16.2"
   }
 }

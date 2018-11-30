@@ -7,7 +7,7 @@ You can also make them hot replacement module compatible thanks to the reloadSag
 ## Installation
 Install ```redux-sagas-injector``` via npm.
 
-```javascript
+```shell
 npm install --save redux-sagas-injector
 ```
 
@@ -50,7 +50,7 @@ if (module.hot) {
  For any store created using redux-sagas-injector, simply use ```injectSaga``` to add a new saga.
  
  ```javascript
- import { injectSaga } from 'redux-sagas-injector';
+ import {injectSaga} from 'redux-sagas-injector';
  
  injectSaga('my_saga', require('./path_to_my_saga').default);
  ```
@@ -69,11 +69,12 @@ You should use injectSaga in complement with injectReducer for loading your js c
  
  ```javascript
  import universal from 'react-universal-component';
- import {injectSaga} from 'redux-sagas-injector';
+ import {injectSaga, injectReducer} from 'redux-sagas-injector';
  
  const MyComponent = universal(import(`./my_component`), {
          onLoad: (module, info, props, context) => {
              injectSaga('my-saga-key', module.saga, false, context.store);
+             injectReducer('my-reducer-key', module.reducer, false, context.store);
          },
      });
  ```
@@ -81,8 +82,7 @@ You should use injectSaga in complement with injectReducer for loading your js c
 `react-router`
  
   ```javascript
- import {injectReducer, reloadReducer} from 'redux-reducers-injector';
- import {injectSaga, reloadSaga} from 'redux-sagas-injector';
+ import {injectSaga, reloadSaga, injectReducer, reloadReducer} from 'redux-sagas-injector';
  
  export default {
      path: 'item(/:id)',

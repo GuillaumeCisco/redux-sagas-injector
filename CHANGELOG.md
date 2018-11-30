@@ -1,5 +1,10 @@
 # CHANGELOG
 
+
+### 0.2.9
+- Export redux-reducers-injector method for dealing with same context when injecting a reducer to the current store.
+- Use last version of redux-reducers-injector
+
 ### 0.2.8
 - Fix hoisting with babel transformation of default argument
 

@@ -6,6 +6,8 @@ import {createInjectStore} from 'redux-reducers-injector';
 import createSagaMiddleware from 'redux-saga';
 import {take, fork, cancel} from 'redux-saga/effects';
 
+export {injectReducer, reloadReducer} from 'redux-reducers-injector';
+
 export const CANCEL_SAGAS_HMR = 'CANCEL_SAGAS_HMR';
 
 let original_store = {};
