@@ -1,7 +1,7 @@
 # CHANGELOG
 
-### 0.2.10
-- Remove unnecessary dependency babel-runtime
+### 0.2.11
+- Update README for showing how to support react-redux@6.0.0
 
 ### 0.2.9
 - Export redux-reducers-injector method for dealing with same context when injecting a reducer to the current store.
