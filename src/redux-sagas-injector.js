@@ -12,14 +12,14 @@ export const CANCEL_SAGAS_HMR = 'CANCEL_SAGAS_HMR';
 
 let original_store = {};
 
-function createAbortableSaga(key, saga, store = original_store) {
+function createAbortableSaga(key, saga) {
     if (process.env.NODE_ENV === 'development') {
         return function* main() {
             const sagaTask = yield fork(saga);
             const {payload} = yield take(CANCEL_SAGAS_HMR);
 
             if (payload === key) {
-                yield cancel(sagaTask, store);
+                yield cancel(sagaTask);
             }
         };
     } else {
@@ -28,8 +28,8 @@ function createAbortableSaga(key, saga, store = original_store) {
 }
 
 export const SagaManager = {
-    startSaga(key, saga, store = original_store) {
-        sagaMiddleware.run(createAbortableSaga(key, saga, store));
+    startSaga(key, saga) {
+        sagaMiddleware.run(createAbortableSaga(key, saga));
     },
 
     cancelSaga(key, store = original_store) {
@@ -42,7 +42,7 @@ export const SagaManager = {
 
 export function reloadSaga(key, saga, store = original_store) {
     SagaManager.cancelSaga(key, store);
-    SagaManager.startSaga(key, saga, store);
+    SagaManager.startSaga(key, saga);
 }
 
 export function injectSaga(key, saga, force = false, store = original_store) {

@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### 1.0.0
+- Support redux-saga 1.0.1
+
 ### 0.2.11
 - Update README for showing how to support react-redux@6.0.0
 
