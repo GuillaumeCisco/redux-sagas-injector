@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### 1.0.1
+- Update dependencies
+
 ### 1.0.0
 - Support redux-saga 1.0.1
 
