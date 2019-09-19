@@ -66,6 +66,19 @@ Reinjecting a saga with the same key will do nothing.
 
 You should use injectSaga in complement with injectReducer for loading your js code asynchronously via routing.
 
+## Injecting sagas in bulk
+
+You can add multiple sagas at once:
+```javascript
+import {injectSagaBulk} from 'redux-sagas-injector';
+
+const sagas = [
+    {key: 'my_saga', saga: require('./path_to_my_saga').default},
+    {key: 'my_other_saga.bar', saga: require('./path_to_my_other_saga').default},
+];
+injectSagaBulk(reducers);
+```
+
 ## Example:
 
 

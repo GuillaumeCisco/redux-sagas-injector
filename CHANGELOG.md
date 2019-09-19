@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 1.1.0
+- Update dependencies
+- Add new method injectSagaBulk
+
 ### 1.0.1
 - Update dependencies
 

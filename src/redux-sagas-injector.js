@@ -6,7 +6,7 @@ import {createInjectStore} from 'redux-reducers-injector';
 import createSagaMiddleware from 'redux-saga';
 import {take, fork, cancel} from 'redux-saga/effects';
 
-export {injectReducer, reloadReducer} from 'redux-reducers-injector';
+export {injectReducer, reloadReducer, injectReducerBulk} from 'redux-reducers-injector';
 
 export const CANCEL_SAGAS_HMR = 'CANCEL_SAGAS_HMR';
 
@@ -55,8 +55,26 @@ export function injectSaga(key, saga, force = false, store = original_store) {
         if (force) {
             SagaManager.cancelSaga(key, store);
         }
-        SagaManager.startSaga(key, saga, store);
+        SagaManager.startSaga(key, saga);
     }
+}
+
+export function injectSagaBulk(sagas, force = false, store = original_store) {
+
+    sagas.forEach(x => {
+        console.log(x);
+        // If already set, do nothing, except force is specified
+        const exists = store.injectedSagas.includes(x.key);
+        if (!exists || force) {
+            if (!exists) {
+                store.injectedSagas = [...store.injectedSagas, x.key];
+            }
+            if (force) {
+                SagaManager.cancelSaga(x.key, store);
+            }
+            SagaManager.startSaga(x.key, x.saga);
+        }
+    });
 }
 
 export function createInjectSagasStore(rootSaga, initialReducers, ...args) {
