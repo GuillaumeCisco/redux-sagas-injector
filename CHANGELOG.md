@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### 1.1.1
+- remove console.log
+
 ### 1.1.0
 - Update dependencies
 - Add new method injectSagaBulk

@@ -62,7 +62,6 @@ export function injectSaga(key, saga, force = false, store = original_store) {
 export function injectSagaBulk(sagas, force = false, store = original_store) {
 
     sagas.forEach(x => {
-        console.log(x);
         // If already set, do nothing, except force is specified
         const exists = store.injectedSagas.includes(x.key);
         if (!exists || force) {
