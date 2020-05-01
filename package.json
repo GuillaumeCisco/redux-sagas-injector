@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel ./src --noInterop --ignore=*.spec.js --out-dir ./lib --presets @babel/preset-env,@babel/preset-react",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -51,6 +53,8 @@
   "dependencies": {
     "redux": "4.0.4",
     "redux-reducers-injector": "0.3.0",
-    "redux-saga": "1.1.1"
-  }
+    "redux-saga": "1.1.1",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
