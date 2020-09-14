@@ -1,5 +1,8 @@
 # CHANGELOG
 
+### 1.1.2
+- Update dependencies
+
 ### 1.1.1
 - remove console.log
 
