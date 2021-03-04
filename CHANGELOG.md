@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 1.1.4
+- Update dependencies
+
+### 1.1.3
+- Update dependencies
+
 ### 1.1.2
 - Update dependencies
 
